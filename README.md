@@ -5,7 +5,7 @@ This is a series of labs to introduce users to AWS IoT Services. Instead of trad
 
 ## Labs
 There are currently 2 labs that revolve around AWS resources:
-* [Alert System](./AlertSystem)
+* [Alert System](./AlertSystem/README.md)
 * [AWS IoT SiteWise](./SiteWise/README.md)
 
 ## Note
