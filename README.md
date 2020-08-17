@@ -5,8 +5,8 @@ This is a series of labs to introduce users to AWS IoT Services. Instead of trad
 
 ## Labs
 There are currently 2 labs that revolve around AWS resources:
-* [Alert System](./AlertSystem/README.md)
-* [AWS IoT SiteWise](./SiteWise/README.md)
+* [Alert System](./AlertSystem.md)
+* [AWS IoT SiteWise](./SiteWise.md)
 
 ## Note
 You will incur charges for using AWS services based on how long they are running. Make sure that after running the labs you delete the resources. Each lab will detail which resources need to be deleted
