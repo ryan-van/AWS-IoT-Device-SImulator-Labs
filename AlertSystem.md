@@ -4,7 +4,7 @@
 In this lab you will get acquainted with the IoT Device Simulator, which creates a web interface that allows you to simulate devices that send data to IoT Core. You will make an alert system that notifies you of extremities in temperature, water level, and air quality.
 
 ## Architecture
-![Architecture](/images/architecture.jpg)
+![Architecture](/images-alert/architecture.jpg)
 
 ## Prerequisites
 * AWS Account
@@ -15,13 +15,13 @@ Let’s first setup IoT Device Simulator using a CloudFormation template:
 * Login to the AWS Console.
 * Follow this [link](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?templateURL=https:%2F%2Fs3.amazonaws.com%2Fsolutions-reference%2Fiot-device-simulator%2Flatest%2Fiot-device-simulator.template)
 * Change the region to match your region (currently only tested to work in US-West-2 or US-East-1)
-![Device Simulator 1](/images/devicesim1.jpg)
+![Device Simulator 1](/images-alert/devicesim1.jpg)
 * For Specify Details, follow this image. Make sure to use your own admin name and insert your aws email for Administrator email under parameters
-![Device Simulator 2](/images/devicesim2.jpg)
+![Device Simulator 2](/images-alert/devicesim2.jpg)
 * On the options page, select next.
 * For the Review page, confirm your settings and check the acknowledgment box for IAM resources
     * Click create stack
-    ![Device Simulator 3](/images/devicesim3.jpg)
+    ![Device Simulator 3](/images-alert/devicesim3.jpg)
 * Here, it will take about 10 minutes to prepare the CloudFormation template. You should receive an email in the meantime.
 
 ## Step 2 - Create an AWS Simple Notification Service (SNS) Topic
@@ -32,14 +32,14 @@ While waiting for the CloudFormation Template to be created, we will focus on cr
 * Leave the rest of the settings default and Create Topic
 * Under our created topic, we can create our subscription to an end user device, here you may choose which device you want to send our alerts to
     * Select the protocol of your choice (here, we’re going to use email)
-    ![SNS 1](/images/sns1.jpg)
+    ![SNS 1](/images-alert/sns1.jpg)
     * You must confirm on the device / protocol that you want to subscribe
     * NOTE: Charges may apply for SNS on mobile devices
 
 ## Step 3 - Create a device type and simulate an alert device
 Setup your Device Simulator Account by following the email you received. Once that is done, we’ll get started with creating our device type.
 * After creating your account and setting the admin user, you should enter a screen similar to this:
-![Device Type 1](/images/devicetype1.jpg)
+![Device Type 1](/images-alert/devicetype1.jpg)
 * We’re going to create a Device Type now.
     * Click on Create a Device Type
     * Name it iotAlert
@@ -69,7 +69,7 @@ Setup your Device Simulator Account by following the email you received. Once th
             * Integer Min: 0
             * Integer Max: 22
     * Save the Device Type:
-    ![Device Type 1](/images/devicetype2.jpg)
+    ![Device Type 1](/images-alert/devicetype2.jpg)
 
 * Click Widgets on the left
     * Add a widget
@@ -81,10 +81,10 @@ You’re first device is created and data is being simulated! Let’s move onto 
 We’re going to now create our Lambda function and send data to our SNS topic
 * Go to the lambda console
 * Create a new lambda function from scratch:
-![Lambda 1](/images/lambda1.jpg)
+![Lambda 1](/images-alert/lambda1.jpg)
     * Under permissions, create a new role from AWS policy templates;
     * Name the role and under policy templates, choose SNS Publish Policy
-    ![Lambda 2](/images/lambda2.jpg)
+    ![Lambda 2](/images-alert/lambda2.jpg)
 
 * Edit the code in the lambda function:
 ```python
@@ -128,7 +128,7 @@ def lambda_handler(event, context):
 ## Step 5 - Connect your devices to IoT Core and AWS Lambda
 We’re now going to create a trigger for our Lambda function, which will be data being sent into Lambda from our Device Simulator
 * Go to AWS IoT Core → Act → Rule
-![IoT Core 1](/images/iotcore1.jpg)
+![IoT Core 1](/images-alert/iotcore1.jpg)
 * Name it iotAlert
 * For the SQL statement, change it to our topic: SELECT \* FROM '/iot/alert'
 * Add Action:
@@ -136,7 +136,7 @@ We’re now going to create a trigger for our Lambda function, which will be dat
     * Select the lambda function we created, iotAlert
 
 * Create the Rule
-![IoT Core 1](/images/iotcore2.jpg)
+![IoT Core 1](/images-alert/iotcore2.jpg)
 We have now connected our IoT Device to our Lambda function, which is connected to SNS
 
 ## Step 6 - Test
